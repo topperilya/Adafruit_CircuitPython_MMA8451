@@ -30,7 +30,6 @@ sensor = adafruit_mma8451.MMA8451(i2c)
 #sensor.data_rate = adafruit_mma8451.DATARATE_12_5HZ # 12.5Hz
 #sensor.data_rate = adafruit_mma8451.DATARATE_6_25HZ # 6.25Hz
 #sensor.data_rate = adafruit_mma8451.DATARATE_1_56HZ # 1.56Hz
-print('Range: {}'.format(sensor.range))
 
 # Main loop to print the acceleration and orientation every second.
 while True:
