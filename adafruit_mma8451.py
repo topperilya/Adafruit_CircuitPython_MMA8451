@@ -53,6 +53,7 @@ _MMA8451_REG_CTRL_REG2     = const(0x2B)
 _MMA8451_REG_CTRL_REG4     = const(0x2D)
 _MMA8451_REG_CTRL_REG5     = const(0x2E)
 _MMA8451_DATARATE_MASK     = const(0b111)
+_SENSORS_GRAVITY_EARTH     = 9.80665
 
 # External user-facing constants:
 PL_PUF           = 0      # Portrait, up, front
@@ -182,7 +183,7 @@ class MMA8451:
     @property
     def acceleration(self):
         """Get the acceleration measured by the sensor.  Will return a 3-tuple
-        of X, Y, Z axis acceleration values in gravities (G).
+        of X, Y, Z axis acceleration values in m/s^2.
         """
         # Read 6 bytes for 16-bit X, Y, Z values.
         self._read_into(_MMA8451_REG_OUT_X_MSB, self._BUFFER, count=6)
@@ -194,11 +195,17 @@ class MMA8451:
         # Scale values based on current sensor range to get proper units.
         _range = self.range
         if _range == RANGE_8G:
-            return (x/1024.0, y/1024.0, z/1024.0)
+            return (x/1024.0*_SENSORS_GRAVITY_EARTH,
+                    y/1024.0*_SENSORS_GRAVITY_EARTH,
+                    z/1024.0*_SENSORS_GRAVITY_EARTH)
         elif _range == RANGE_4G:
-            return (x/2048.0, y/2048.0, z/2048.0)
+            return (x/2048.0*_SENSORS_GRAVITY_EARTH,
+                    y/2048.0*_SENSORS_GRAVITY_EARTH,
+                    z/2048.0*_SENSORS_GRAVITY_EARTH)
         elif _range == RANGE_2G:
-            return (x/4096.0, y/4096.0, z/4096.0)
+            return (x/4096.0*_SENSORS_GRAVITY_EARTH,
+                    y/4096.0*_SENSORS_GRAVITY_EARTH,
+                    z/4096.0*_SENSORS_GRAVITY_EARTH)
         else:
             raise RuntimeError('Unexpected range!')
 

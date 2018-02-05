@@ -34,7 +34,7 @@ sensor = adafruit_mma8451.MMA8451(i2c)
 # Main loop to print the acceleration and orientation every second.
 while True:
     x, y, z = sensor.acceleration
-    print('Acceleration: x={0:0.3f}G y={1:0.3f}G z={2:0.3f}G'.format(x, y, z))
+    print('Acceleration: x={0:0.3f}m/s^2 y={1:0.3f}m/s^2 z={2:0.3f}m/s^2'.format(x, y, z))
     orientation = sensor.orientation
     # Orientation is one of these values:
     #  - PL_PUF: Portrait, up, front
