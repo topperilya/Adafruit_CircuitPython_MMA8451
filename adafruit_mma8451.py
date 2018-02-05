@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 """
-`Adafruit_MMA8451`
+`adafruit_mma8451`
 ====================================================
 
 CircuitPython module for the MMA8451 3 axis accelerometer.  See
