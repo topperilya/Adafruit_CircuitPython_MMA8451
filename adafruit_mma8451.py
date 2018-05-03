@@ -28,7 +28,10 @@ examples/simpletest.py for a demo of the usage.
 
 * Author(s): Tony DiCola
 """
-import ustruct
+try:
+    import struct
+except ImportError:
+    import ustruct as struct
 
 from micropython import const
 
@@ -188,7 +191,7 @@ class MMA8451:
         # Read 6 bytes for 16-bit X, Y, Z values.
         self._read_into(_MMA8451_REG_OUT_X_MSB, self._BUFFER, count=6)
         # Reconstruct signed 16-bit integers.
-        x, y, z = ustruct.unpack('>hhh', self._BUFFER)
+        x, y, z = struct.unpack('>hhh', self._BUFFER)
         x >>= 2
         y >>= 2
         z >>= 2
