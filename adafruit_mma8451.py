@@ -185,6 +185,8 @@ class MMA8451:
 
     @property
     def acceleration(self):
+        # pylint: disable=no-else-return
+        # This needs to be refactored when it can be tested
         """Get the acceleration measured by the sensor.  Will return a 3-tuple
         of X, Y, Z axis acceleration values in m/s^2.
         """
