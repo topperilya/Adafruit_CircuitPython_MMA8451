@@ -34,7 +34,7 @@ except ImportError:
     import ustruct as struct
 
 from micropython import const
-# pylint: disable=useless-import-alias
+
 import adafruit_bus_device.i2c_device as i2c_device
 
 
