@@ -35,7 +35,7 @@ except ImportError:
 
 from micropython import const
 
-import adafruit_bus_device.i2c_device as i2c_device
+import adafruit_bus_device.i2c_device as i2c_dev
 
 
 __version__ = "0.0.0-auto.0"
@@ -94,7 +94,7 @@ class MMA8451:
     _BUFFER = bytearray(6)
 
     def __init__(self, i2c, *, address=_MMA8451_DEFAULT_ADDRESS):
-        self._device = i2c_device.I2CDevice(i2c, address)
+        self._device = i2c_dev.I2CDevice(i2c, address)
         # Verify device ID.
         if self._read_u8(_MMA8451_REG_WHOAMI) != 0x1A:
             raise RuntimeError('Failed to find MMA8451, check wiring!')
@@ -185,6 +185,8 @@ class MMA8451:
 
     @property
     def acceleration(self):
+        # pylint: disable=no-else-return
+        # This needs to be refactored when it can be tested
         """Get the acceleration measured by the sensor.  Will return a 3-tuple
         of X, Y, Z axis acceleration values in m/s^2.
         """
