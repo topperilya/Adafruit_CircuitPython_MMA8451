@@ -34,8 +34,8 @@ except ImportError:
     import ustruct as struct
 
 from micropython import const
-
-import adafruit_bus_device.i2c_device as i2c_dev
+# pylint: disable=useless-import-alias
+import adafruit_bus_device.i2c_device as i2c_device
 
 
 __version__ = "0.0.0-auto.0"
@@ -94,7 +94,7 @@ class MMA8451:
     _BUFFER = bytearray(6)
 
     def __init__(self, i2c, *, address=_MMA8451_DEFAULT_ADDRESS):
-        self._device = i2c_dev.I2CDevice(i2c, address)
+        self._device = i2c_device.I2CDevice(i2c, address)
         # Verify device ID.
         if self._read_u8(_MMA8451_REG_WHOAMI) != 0x1A:
             raise RuntimeError('Failed to find MMA8451, check wiring!')
