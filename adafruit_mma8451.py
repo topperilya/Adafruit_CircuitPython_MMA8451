@@ -127,7 +127,7 @@ class MMA8451:
             count = len(buf)
         with self._device as i2c:
             i2c.write_then_readinto(bytes([address & 0xFF]), buf,
-                                    in_end=count, stop=False)
+                                    in_end=count)
 
     def _read_u8(self, address):
         # Read an 8-bit unsigned value from the specified 8-bit address.
