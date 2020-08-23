@@ -42,7 +42,6 @@ __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MMA8451.git"
 
 
-# pylint: disable=bad-whitespace
 # Internal constants:
 _MMA8451_DEFAULT_ADDRESS = const(0x1D)
 _MMA8451_REG_OUT_X_MSB = const(0x01)
@@ -78,7 +77,6 @@ DATARATE_50HZ = 0b100  #   50Hz
 DATARATE_12_5HZ = 0b101  # 12.5Hz
 DATARATE_6_25HZ = 0b110  # 6.25Hz
 DATARATE_1_56HZ = 0b111  # 1.56Hz
-# pylint: enable=bad-whitespace
 
 
 class MMA8451:
