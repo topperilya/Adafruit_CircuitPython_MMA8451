@@ -1,24 +1,7 @@
-# The MIT License (MIT)
+# SPDX-FileCopyrightText: 2017 Tony DiCola for Adafruit Industries
 #
-# Copyright (c) 2017 Tony DiCola for Adafruit Industries
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
+# SPDX-License-Identifier: MIT
+
 """
 `adafruit_mma8451`
 ====================================================
@@ -141,9 +124,9 @@ class MMA8451:
     @property
     def range(self):
         """Get and set the range of the sensor.  Must be a value of:
-         - RANGE_8G: +/- 8g
-         - RANGE_4G: +/- 4g (the default)
-         - RANGE_2G: +/- 2g
+        - RANGE_8G: +/- 8g
+        - RANGE_4G: +/- 4g (the default)
+        - RANGE_2G: +/- 2g
         """
         return self._read_u8(_MMA8451_REG_XYZ_DATA_CFG) & 0x03
 
@@ -158,14 +141,14 @@ class MMA8451:
     @property
     def data_rate(self):
         """Get and set the data rate of the sensor.  Must be a value of:
-         - DATARATE_800HZ:   800Hz (the default)
-         - DATARATE_400HZ:   400Hz
-         - DATARATE_200HZ:   200Hz
-         - DATARATE_100HZ:   100Hz
-         - DATARATE_50HZ:     50Hz
-         - DATARATE_12_5HZ: 12.5Hz
-         - DATARATE_6_25HZ: 6.25Hz
-         - DATARATE_1_56HZ: 1.56Hz
+        - DATARATE_800HZ:   800Hz (the default)
+        - DATARATE_400HZ:   400Hz
+        - DATARATE_200HZ:   200Hz
+        - DATARATE_100HZ:   100Hz
+        - DATARATE_50HZ:     50Hz
+        - DATARATE_12_5HZ: 12.5Hz
+        - DATARATE_6_25HZ: 6.25Hz
+        - DATARATE_1_56HZ: 1.56Hz
         """
         return (self._read_u8(_MMA8451_REG_CTRL_REG1) >> 3) & _MMA8451_DATARATE_MASK
 
@@ -218,13 +201,13 @@ class MMA8451:
     @property
     def orientation(self):
         """Get the orientation of the MMA8451.  Will return a value of:
-         - PL_PUF: Portrait, up, front
-         - PL_PUB: Portrait, up, back
-         - PL_PDF: Portrait, down, front
-         - PL_PDB: Portrait, down, back
-         - PL_LRF: Landscape, right, front
-         - PL_LRB: Landscape, right, back
-         - PL_LLF: Landscape, left, front
-         - PL_LLB: Landscape, left, back
+        - PL_PUF: Portrait, up, front
+        - PL_PUB: Portrait, up, back
+        - PL_PDF: Portrait, down, front
+        - PL_PDB: Portrait, down, back
+        - PL_LRF: Landscape, right, front
+        - PL_LRB: Landscape, right, back
+        - PL_LLF: Landscape, left, front
+        - PL_LLB: Landscape, left, back
         """
         return self._read_u8(_MMA8451_REG_PL_STATUS) & 0x07
