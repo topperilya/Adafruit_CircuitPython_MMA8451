@@ -10,6 +10,23 @@ CircuitPython module for the MMA8451 3 axis accelerometer.  See
 examples/simpletest.py for a demo of the usage.
 
 * Author(s): Tony DiCola
+
+Implementation Notes
+--------------------
+
+**Hardware:**
+
+* Adafruit `Triple-Axis Accelerometer - ±2/4/8g @ 14-bit - MMA8451
+  <https://www.adafruit.com/product/2019>`_
+
+
+**Software and Dependencies:**
+
+* Adafruit CircuitPython firmware for the supported boards:
+  https://circuitpython.org/downloads
+* Adafruit's Bus Device library:
+  https://github.com/adafruit/Adafruit_CircuitPython_BusDevice
+
 """
 try:
     import struct
@@ -64,10 +81,35 @@ DATARATE_1_56HZ = 0b111  # 1.56Hz
 
 class MMA8451:
     """MMA8451 accelerometer.  Create an instance by specifying:
-    - i2c: The I2C bus connected to the sensor.
 
-    Optionally specify:
-    - address: The I2C address of the sensor if not the default of 0x1D.
+    :param ~busio.I2C i2c: The I2C bus the device is connected to.
+    :param int address: The I2C device address. Defaults to :const:`0x1D`
+
+
+    **Quickstart: Importing and using the device**
+
+        Here is an example of using the :class:`MMA8451` class.
+        First you will need to import the libraries to use the sensor
+
+        .. code-block:: python
+
+            import board
+            import adafruit_mma8451
+
+        Once this is done you can define your `board.I2C` object and define your sensor object
+
+        .. code-block:: python
+
+            i2c = board.I2C()  # uses board.SCL and board.SDA
+            sensor = adafruit_mma8451.MMA8451(i2c)
+
+        Now you have access to the :attr:`acceleration` and :attr:`orientation` attributes
+
+        .. code-block:: python
+
+            acc_x, acc_y, acc_z = sensor.acceleration
+            orientation = sensor.orientation
+
     """
 
     # Class-level buffer to reduce allocations and fragmentation.
@@ -124,9 +166,11 @@ class MMA8451:
     @property
     def range(self):
         """Get and set the range of the sensor.  Must be a value of:
+
         - RANGE_8G: +/- 8g
         - RANGE_4G: +/- 4g (the default)
         - RANGE_2G: +/- 2g
+
         """
         return self._read_u8(_MMA8451_REG_XYZ_DATA_CFG) & 0x03
 
@@ -141,6 +185,7 @@ class MMA8451:
     @property
     def data_rate(self):
         """Get and set the data rate of the sensor.  Must be a value of:
+
         - DATARATE_800HZ:   800Hz (the default)
         - DATARATE_400HZ:   400Hz
         - DATARATE_200HZ:   200Hz
@@ -149,6 +194,7 @@ class MMA8451:
         - DATARATE_12_5HZ: 12.5Hz
         - DATARATE_6_25HZ: 6.25Hz
         - DATARATE_1_56HZ: 1.56Hz
+
         """
         return (self._read_u8(_MMA8451_REG_CTRL_REG1) >> 3) & _MMA8451_DATARATE_MASK
 
@@ -166,7 +212,7 @@ class MMA8451:
         # pylint: disable=no-else-return
         # This needs to be refactored when it can be tested
         """Get the acceleration measured by the sensor.  Will return a 3-tuple
-        of X, Y, Z axis acceleration values in m/s^2.
+        of X, Y, Z axis acceleration values in :math:`m/s^2`.
         """
         # Read 6 bytes for 16-bit X, Y, Z values.
         self._read_into(_MMA8451_REG_OUT_X_MSB, self._BUFFER, count=6)
@@ -201,6 +247,7 @@ class MMA8451:
     @property
     def orientation(self):
         """Get the orientation of the MMA8451.  Will return a value of:
+
         - PL_PUF: Portrait, up, front
         - PL_PUB: Portrait, up, back
         - PL_PDF: Portrait, down, front
@@ -209,5 +256,6 @@ class MMA8451:
         - PL_LRB: Landscape, right, back
         - PL_LLF: Landscape, left, front
         - PL_LLB: Landscape, left, back
+
         """
         return self._read_u8(_MMA8451_REG_PL_STATUS) & 0x07
