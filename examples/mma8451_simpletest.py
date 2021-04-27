@@ -4,15 +4,12 @@
 # Simple demo of reading the MMA8451 orientation every second.
 
 import time
-
 import board
-import busio
-
 import adafruit_mma8451
 
 
-# Initialize I2C bus.
-i2c = busio.I2C(board.SCL, board.SDA)
+# Create sensor object, communicating over the board's default I2C bus
+i2c = board.I2C()  # uses board.SCL and board.SDA
 
 # Initialize MMA8451 module.
 sensor = adafruit_mma8451.MMA8451(i2c)

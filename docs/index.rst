@@ -23,9 +23,12 @@ Table of Contents
 .. toctree::
     :caption: Tutorials
 
+    Adafruit Triple-Axis Accelerometer - ±2/4/8g @ 14-bit - MMA8451 Learning Guide <https://learn.adafruit.com/adafruit-mma8451-accelerometer-breakout/>
+
 .. toctree::
     :caption: Related Products
 
+    Adafruit Triple-Axis Accelerometer - ±2/4/8g @ 14-bit - MMA8451 <https://www.adafruit.com/product/2019>
 
 .. toctree::
     :caption: Other Links
