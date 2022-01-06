@@ -164,9 +164,9 @@ class MMA8451:
     def range(self):
         """Get and set the range of the sensor.  Must be a value of:
 
-        - RANGE_8G: +/- 8g
-        - RANGE_4G: +/- 4g (the default)
-        - RANGE_2G: +/- 2g
+        * ``RANGE_8G``: +/- 8g
+        * ``RANGE_4G``: +/- 4g (the default)
+        * ``RANGE_2G``: +/- 2g
 
         """
         return self._read_u8(_MMA8451_REG_XYZ_DATA_CFG) & 0x03
@@ -183,14 +183,14 @@ class MMA8451:
     def data_rate(self):
         """Get and set the data rate of the sensor.  Must be a value of:
 
-        - DATARATE_800HZ:   800Hz (the default)
-        - DATARATE_400HZ:   400Hz
-        - DATARATE_200HZ:   200Hz
-        - DATARATE_100HZ:   100Hz
-        - DATARATE_50HZ:     50Hz
-        - DATARATE_12_5HZ: 12.5Hz
-        - DATARATE_6_25HZ: 6.25Hz
-        - DATARATE_1_56HZ: 1.56Hz
+        * ``DATARATE_800HZ``:   800Hz (the default)
+        * ``DATARATE_400HZ``:   400Hz
+        * ``DATARATE_200HZ``:   200Hz
+        * ``DATARATE_100HZ``:   100Hz
+        * ``DATARATE_50HZ``:     50Hz
+        * ``DATARATE_12_5HZ``: 12.5Hz
+        * ``DATARATE_6_25HZ``: 6.25Hz
+        * ``DATARATE_1_56HZ``: 1.56Hz
 
         """
         return (self._read_u8(_MMA8451_REG_CTRL_REG1) >> 3) & _MMA8451_DATARATE_MASK
@@ -245,14 +245,14 @@ class MMA8451:
     def orientation(self):
         """Get the orientation of the MMA8451.  Will return a value of:
 
-        - PL_PUF: Portrait, up, front
-        - PL_PUB: Portrait, up, back
-        - PL_PDF: Portrait, down, front
-        - PL_PDB: Portrait, down, back
-        - PL_LRF: Landscape, right, front
-        - PL_LRB: Landscape, right, back
-        - PL_LLF: Landscape, left, front
-        - PL_LLB: Landscape, left, back
+        * ``PL_PUF``: Portrait, up, front
+        * ``PL_PUB``: Portrait, up, back
+        * ``PL_PDF``: Portrait, down, front
+        * ``PL_PDB``: Portrait, down, back
+        * ``PL_LRF``: Landscape, right, front
+        * ``PL_LRB``: Landscape, right, back
+        * ``PL_LLF``: Landscape, left, front
+        * ``PL_LLB``: Landscape, left, back
 
         """
         return self._read_u8(_MMA8451_REG_PL_STATUS) & 0x07
