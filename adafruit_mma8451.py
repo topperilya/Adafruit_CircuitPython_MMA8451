@@ -34,6 +34,12 @@ from micropython import const
 
 from adafruit_bus_device import i2c_device
 
+try:
+    from typing import Optional, Tuple
+    from busio import I2C
+except ImportError:
+    pass
+
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MMA8451.git"
@@ -113,7 +119,7 @@ class MMA8451:
     # Note this is NOT thread-safe or re-entrant by design!
     _BUFFER = bytearray(6)
 
-    def __init__(self, i2c, *, address=_MMA8451_DEFAULT_ADDRESS):
+    def __init__(self, i2c: I2C, *, address: int = _MMA8451_DEFAULT_ADDRESS) -> None:
         self._device = i2c_device.I2CDevice(i2c, address)
         # Verify device ID.
         if self._read_u8(_MMA8451_REG_WHOAMI) != 0x1A:
@@ -134,7 +140,7 @@ class MMA8451:
         # Activate at max rate, low noise mode
         self._write_u8(_MMA8451_REG_CTRL_REG1, 0x01 | 0x04)
 
-    def _read_into(self, address, buf, count=None):
+    def _read_into(self, address: int, buf: bytearray, count: Optional[int] = None) -> bytearray:
         # Read bytes from the specified address into the provided buffer.
         # If count is not specified (the default) the entire buffer is filled,
         # otherwise only count bytes are copied in.
@@ -148,12 +154,12 @@ class MMA8451:
         with self._device as i2c:
             i2c.write_then_readinto(bytes([address & 0xFF]), buf, in_end=count)
 
-    def _read_u8(self, address):
+    def _read_u8(self, address: int) -> int:
         # Read an 8-bit unsigned value from the specified 8-bit address.
         self._read_into(address, self._BUFFER, count=1)
         return self._BUFFER[0]
 
-    def _write_u8(self, address, val):
+    def _write_u8(self, address: int, val: int) -> None:
         # Write an 8-bit unsigned value to the specified 8-bit address.
         with self._device as i2c:
             self._BUFFER[0] = address & 0xFF
@@ -161,7 +167,7 @@ class MMA8451:
             i2c.write(self._BUFFER, end=2)
 
     @property
-    def range(self):
+    def range(self) -> int:
         """Get and set the range of the sensor.  Must be a value of:
 
         - RANGE_8G: +/- 8g
@@ -172,7 +178,7 @@ class MMA8451:
         return self._read_u8(_MMA8451_REG_XYZ_DATA_CFG) & 0x03
 
     @range.setter
-    def range(self, val):
+    def range(self, val: int) -> None:
         assert 0 <= val <= 2
         reg1 = self._read_u8(_MMA8451_REG_CTRL_REG1)
         self._write_u8(_MMA8451_REG_CTRL_REG1, 0x00)  # deactivate
@@ -180,7 +186,7 @@ class MMA8451:
         self._write_u8(_MMA8451_REG_CTRL_REG1, reg1 | 0x01)  # activate
 
     @property
-    def data_rate(self):
+    def data_rate(self) -> int:
         """Get and set the data rate of the sensor.  Must be a value of:
 
         - DATARATE_800HZ:   800Hz (the default)
@@ -196,7 +202,7 @@ class MMA8451:
         return (self._read_u8(_MMA8451_REG_CTRL_REG1) >> 3) & _MMA8451_DATARATE_MASK
 
     @data_rate.setter
-    def data_rate(self, val):
+    def data_rate(self, val: int) -> None:
         assert 0 <= val <= 7
         ctl1 = self._read_u8(_MMA8451_REG_CTRL_REG1)
         self._write_u8(_MMA8451_REG_CTRL_REG1, 0x00)  # deactivate
@@ -205,7 +211,7 @@ class MMA8451:
         self._write_u8(_MMA8451_REG_CTRL_REG1, ctl1 | 0x01)  # activate
 
     @property
-    def acceleration(self):
+    def acceleration(self) -> Tuple[float, float, float]:
         # pylint: disable=no-else-return
         # This needs to be refactored when it can be tested
         """Get the acceleration measured by the sensor.  Will return a 3-tuple
@@ -242,7 +248,7 @@ class MMA8451:
             raise RuntimeError("Unexpected range!")
 
     @property
-    def orientation(self):
+    def orientation(self) -> int:
         """Get the orientation of the MMA8451.  Will return a value of:
 
         - PL_PUF: Portrait, up, front
