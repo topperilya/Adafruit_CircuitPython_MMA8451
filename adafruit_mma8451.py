@@ -140,7 +140,9 @@ class MMA8451:
         # Activate at max rate, low noise mode
         self._write_u8(_MMA8451_REG_CTRL_REG1, 0x01 | 0x04)
 
-    def _read_into(self, address: int, buf: bytearray, count: Optional[int] = None) -> bytearray:
+    def _read_into(
+        self, address: int, buf: bytearray, count: Optional[int] = None
+    ) -> bytearray:
         # Read bytes from the specified address into the provided buffer.
         # If count is not specified (the default) the entire buffer is filled,
         # otherwise only count bytes are copied in.
