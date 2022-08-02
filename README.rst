@@ -13,6 +13,10 @@ Introduction
     :target: https://github.com/adafruit/Adafruit_CircuitPython_MMA8451/actions/
     :alt: Build Status
 
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :target: https://github.com/psf/black
+    :alt: Code Style: Black
+
 CircuitPython module for the MMA8451 3 axis accelerometer.
 
 **Note:** Older versions of the Raspberry Pi firmware do not have I2C clock stretching support so they don't work well with the MMA. Please ensure your firmware is updated to the latest version before continuing and slow down the I2C as explained here: https://learn.adafruit.com/circuitpython-on-raspberrypi-linux/i2c-clock-stretching
