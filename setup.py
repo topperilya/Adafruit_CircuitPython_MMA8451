@@ -24,7 +24,7 @@ with open(path.join(here, "README.rst"), encoding="utf-8") as f:
 
 setup(
     name="adafruit-circuitpython-mma8451",
-    use_scm_version=True,
+    #use_scm_version=True,
     setup_requires=["setuptools_scm"],
     description="CircuitPython library for MMA8451 3-axis accelerometer..",
     long_description=long_description,
